@@ -5,16 +5,12 @@
 (function(window, document, undefined){
   // Create the EngnJS object if it doesn't exist.
   window.engn = window.engn || {};
-  
+
   // Checks for intersection. Adapted from http://stackoverflow.com/questions/2752349/fast-rectangle-to-rectangle-intersection.
   window.engn.checkIntersection = function (xa, ya, wa, ha, xb, yb, wb, hb) {
-    var xxa = xa + wa;
-    var yya = ya + ha;
-    var xxb = xb + wb;
-    var yyb = yb + hb;
-    return !(xb > xxa || xxb < xa || yb > yya || yyb < ya);
+    return !(xb > xa + wa || xb + wb < xa || yb > ya + ha || yb + hb < ya);
   };
-  
+
   // Create the Loop class.
   window.engn.Loop = function (fps) {
     var tUpdate = []; // Bindings for game updates.

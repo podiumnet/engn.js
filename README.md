@@ -6,4 +6,5 @@ They are all licensed under the MIT license.
 ## loop.js
 Loop.js is a simple game loop management library.
 It introduces the `Loop` class, which is quite useful for game loops!
+
 [Read Its Documentation!](https://github.com/podiumnet/engn.js/blob/master/loop.js.md)

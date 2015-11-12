@@ -1,4 +1,4 @@
-// engn.js (vDevel) - A simple game utilities library.
+// engn.js (v1.0.1) - A simple game utilities library.
 // Licensed under the MIT license.
 // Copyright (C) 2015 Podium
 // GitHub Repository: podiumnet/engn.js

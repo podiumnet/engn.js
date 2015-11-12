@@ -5,22 +5,22 @@ It introduces the `Loop` class, which works as follows:
 ## Loop (fps)
 Establish the Loop object with the specified FPS for the loop.
 
-## new Loop().onUpdate (callback)
+## Loop.onUpdate (callback)
 Binds `callback` to be called whenever a game logic update (tick) occurs.
 
 **Returns:** The original Loop object, to allow chaining
 
-## new Loop().onRender (callback)
+## Loop.onRender (callback)
 Binds `callback` to be called whenever a game rendering occurs.
 
 **Returns:** The original Loop object, to allow chaining.
 
-## new Loop().freeze ()
+## Loop.freeze ()
 Freezes (pauses) the game loop at the next render.
 
 **Returns:** The original Loop object, to allow chaining.
 
-## new Loop().unfreeze ()
+## Loop.unfreeze ()
 Unfreezes (plays) the game loop. This is also used to begin the game loop when it is first created.
 
 **Returns:** The original Loop object, to allow chaining.

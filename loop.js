@@ -4,8 +4,10 @@
 // Copyright (C) 2015 Podium
 // GitHub Repository: podiumnet/engn.js
 (function(window, document, undefined){
+  // Create the EngnJS object if it doesn't exist.
+  window.engn = window.engn || {};
   // Create the Loop class.
-  window.Loop = function (fps) {
+  window.engn.Loop = function (fps) {
     var tUpdate = []; // Bindings for game updates.
     var tRender = []; // Bindings for game renders.
     // Trigger the bindings for game renders.

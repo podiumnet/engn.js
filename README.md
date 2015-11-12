@@ -1,7 +1,7 @@
 # engn.js
-Engn.js is a set of JS libraries to help you make your games in javascript.
-It is **not** a full-blown game engine, just small libraries to help you create one.
-They are all licensed under the MIT license.
+Engn.js is a JS library to help you make your games in javascript.
+It is **not** a full-blown game engine, just a library to help you create one.
+It is licensed under the MIT license.
 
 **Note:** All development must happen in the `devel` branch before being merged into master.
 

@@ -12,6 +12,19 @@
     return !(xb > xa + wa || xb + wb < xa || yb > ya + ha || yb + hb < ya);
   };
 
+  engn.KeyMonitor = function () {
+    var keys = [];
+    window.addEventListener("keydown", function (e) {
+      keys[e.keyCode] = 1;
+    });
+    window.addEventListener("keyup", function (e) {
+      keys[e.keyCode] = 0;
+    });
+    this.keyDown = function (keycode) {
+      return keys[keycode];
+    }
+  };
+
   // Create the Loop class.
   engn.Loop = function (fps) {
     var tUpdate = [], tRender = [], skipped, interval, skipUntil, next, frozen, render, update,
@@ -20,11 +33,13 @@
     bindutil = function (from) {
       return function () {
         from.forEach(function(callback) { callback(); });
+        return this;
       };
     };
     triggerutil = function (to) {
       return function (callback) {
         to.push(callback);
+        return this;
       };
     };
     render = bindutil(tRender); // Trigger the bindings for game renders.

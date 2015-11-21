@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Engn Test</title>
+    <script src="../engn.js"></script>
+  </head>
+  <body>
+    <canvas id="gamevas"></canvas>
+    <script>
+    var canvas = document.querySelector("#gamevas");
+    canvas.width = 300;
+    canvas.height = 300;
+    canvas.style.border = "1px solid #000";
+    var ctx = canvas.getContext("2d");
+    var player = {
+      x: 0,
+      y: 0,
+      width: 20,
+      height: 20,
+      color: "#f00",
+      speed: 1
+    };
+    var enemy = {
+      x: 50,
+      y: 90,
+      width: 25,
+      height: 30,
+      color: "#0f0"
+    };
+    var renderThing = function (thing) {
+      ctx.fillStyle = thing.color;
+      ctx.fillRect(thing.x, thing.y, thing.width, thing.height);
+    };
+    var km = new engn.KeyMonitor();
+    var loop = new engn.Loop(60);
+    loop.onUpdate(function(){
+      if (km.keyDown('16')) player.color = "#ff0";
+      else player.color = "#f00"
+      var gain = player.speed + (player.speed < 5 ? .2 : 0);
+      if (km.keyDown('39')) player.x += (player.speed = gain);
+      if (km.keyDown('37')) player.x -= (player.speed = gain);
+      if (km.keyDown('40')) player.y += (player.speed = gain);
+      if (km.keyDown('38')) player.y -= (player.speed = gain);
+      if (player.speed > 1) player.speed -= .1;
+      if (engn.checkIntersection(player.x, player.y, player.width,
+        player.height, enemy.x, enemy.y, enemy.width, enemy.height))
+        player.color = "#000";
+    }).onRender(function(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      renderThing(player);
+      renderThing(enemy);
+    }).unfreeze();
+    </script>
+  </body>
+</html>

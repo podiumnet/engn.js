@@ -8,8 +8,9 @@
 
   // Checks for intersection. Adapted from
   // http://stackoverflow.com/questions/2752349/fast-rectangle-to-rectangle-intersection.
-  engn.checkIntersection = function (xa, ya, wa, ha, xb, yb, wb, hb) {
-    return !(xb > xa + wa || xb + wb < xa || yb > ya + ha || yb + hb < ya);
+  engn.checkIntersection = function (a, b) {
+    return !(b.x > a.x + a.width || b.x + b.width < a.x ||
+    b.y > a.y + a.height || b.y + b.height <a.y);
   };
 
   engn.KeyMonitor = function () {

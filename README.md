@@ -30,9 +30,9 @@ Unfreezes (plays) the game loop. This is also used to begin the game loop when i
 
 **Returns:** The original Loop object, to allow chaining.
 
-## engn.checkIntersection (x1, y1, w1, h1, x2, y2, w2, h2)
-Check for the intersection of rectangle 1
-(x1 = x, y1 = y, w1 = width, h1 = height) and rectangle 2 (x2 = x, y2 = y, w2 = width, h2 = height).
+## engn.checkIntersection (a, b)
+Check for the intersection of rectangle `a` and rectangle `b`.
+`a` and `b` are objects with x, y, width, and height values.
 
 **Returns:** A boolean value representing whether or not the rectangles intersect.
 

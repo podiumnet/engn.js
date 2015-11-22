@@ -54,7 +54,10 @@
     msgbtn.onkeydown = function (e) {
       if (e.keyCode === 13) hideMessage();
     };
-    var showMessage = function (text) {
+    var levelSwitch = function (text, newlevel) {
+      engn.keys.reset();
+      difficulty = newlevel;
+      setGame();
       loop.freeze();
       msgelem.style.display = "block";
       messagetext.innerHTML = text;
@@ -80,7 +83,6 @@
           speed: difficulty / 2 + 1 + Math.floor(Math.random() * 3)
         });
       }
-
       goal = {
         x: canvas.width - 20,
         y: canvas.height - 20,
@@ -88,7 +90,6 @@
         height: 20,
         color: "#00f"
       }
-      newIntersection = true;
     };
     var renderThing = function (thing) {
       ctx.fillStyle = thing.color;
@@ -112,35 +113,34 @@
       if (player.y < 0) player.y = 0;
       if (player.y > canvas.height - player.height) player.y = canvas.height - player.height;
 
-      player.speed = 5;
+      // Win the level if the player touches the goal.
+      if (engn.checkIntersection(player, goal))
+        levelSwitch("You Win Level " + difficulty, difficulty + 1);
 
       // Check for intersection with each enemy.
-      var icount = 0;
+      var isect = false;
       enemies.forEach(function(enemy){
-        if (engn.checkIntersection(player, enemy)) {
-          engn.keys.reset();
-          showMessage("You Lose Level " + difficulty);
-          difficulty = 1;
-          loop.freeze();
-          setGame();
-        } else if(player.x > 10 || player.y > 10) {
+        // Update the intersection found status.
+        isect = engn.checkIntersection(player, enemy) || isect;
+        if(player.x > 10 || player.y > 10) {
           enemy.x += player.x > enemy.x ? enemy.speed : -enemy.speed;
           enemy.y += player.y > enemy.y ? enemy.speed : -enemy.speed;
         }
       });
 
-      if (engn.checkIntersection(player, goal)) {
-        engn.keys.reset();
-        showMessage("You Win Level " + difficulty);
-        difficulty++;
-        loop.freeze();
-        setGame();
-      }
+      // Lose the level if the player is touching an enemy.
+      if (isect) levelSwitch("You Lose Level " + difficulty, 1);
+
     }).onRender(function(){
+      // Clear the canvas.
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Render the stuff on the screen.
       renderThing(player);
       renderThing(goal);
       enemies.forEach(function(enemy){renderThing(enemy);});
+
+      // If the player is in it's starting position, show the intro text.
       if (!(player.x > 10 || player.y > 10)) {
         ctx.textAlign = "center";
         ctx.fillStyle = "#000";

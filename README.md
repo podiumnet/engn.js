@@ -36,10 +36,24 @@ Check for the intersection of rectangle `a` and rectangle `b`.
 
 **Returns:** A boolean value representing whether or not the rectangles intersect.
 
-## engn.KeyMonitor ()
-Establish a KeyMonitor object to monitor what keys are pressed.
+## engn.keys ()
+A key monitor to determine which keys are pressed.
 
 ### keyDown (keycode)
 Check whether the key `keycode` is down.
+
+### reset ()
+Reset the statuses of all keys.
+
+### noPreventDefault ()
+Stop the key monitor from using preventDefault.
+
+### down (e)
+Trigger a simulated onkeydown event. `e` is an object with a `keyCode` property
+representing the key to be pressed.
+
+### up (e)
+Trigger a simulated onkeyup event. `e` is an object with a `keyCode` property
+representing the key to be released.
 
 **Returns:** A boolean value representing whether or not the key is pressed.

@@ -13,18 +13,29 @@
     b.y > a.y + a.height || b.y + b.height <a.y);
   };
 
-  engn.KeyMonitor = function () {
+  engn.keys = new (function () {
     var keys = [];
-    window.addEventListener("keydown", function (e) {
+    var prevdef = true;
+    this.down = function (e) {
       keys[e.keyCode] = 1;
-    });
-    window.addEventListener("keyup", function (e) {
+      if (prevdef && (e.keyCode < 112 || e.keyCode > 123)) e.preventDefault();
+    };
+    this.up = function (e) {
       keys[e.keyCode] = 0;
-    });
+      if (prevdef && (e.keyCode < 112 || e.keyCode > 123)) e.preventDefault();
+    };
+    window.addEventListener("keydown", this.down);
+    window.addEventListener("keyup", this.up);
     this.keyDown = function (keycode) {
       return keys[keycode];
     }
-  };
+    this.reset = function () {
+      keys = [];
+    };
+    this.noPreventDefault = function () {
+      prevdef = false;
+    }
+  });
 
   // Create the Loop class.
   engn.Loop = function (fps) {

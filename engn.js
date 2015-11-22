@@ -183,7 +183,7 @@
     };
     this.reset = function () {
       keys.forEach(function(keyname){
-        this[keyname] = 0;
+        if (keyname) this[keyname] = 0;
       });
     };
     this.noPreventDefault = function () {
@@ -191,7 +191,7 @@
     }
     window.addEventListener("keydown", this.downEvt);
     window.addEventListener("keyup", this.upEvt);
-    window.addEventListener("blur", this.reset);
+    window.addEventListener("focus", this.reset);
   });
 
   // Create the Loop class.
@@ -236,6 +236,10 @@
     };
     // Unfreezes (plays) the game loop.
     this.unfreeze = function () {
+      // Add bindings for pausing game when focus is lost.
+      window.addEventListener("blur", this.freeze);
+      window.addEventListener("focus", this.unfreeze);
+
       // Reset data about the game loops for a fresh start.
       skipped = 0;
       interval = 1000 / fps;

@@ -89,28 +89,28 @@
     var mobicontrols = document.querySelector("#mobicontrols");
     if (document.createTouch) mobicontrols.style.display = "block";
     document.querySelector("#mobiright").ontouchstart = function () {
-      eng.keys.down({keyCode: 39});
+      eng.keys.downEvt({keyCode: 39});
     };
     document.querySelector("#mobiright").ontouchend = function () {
-      engn.keys.up({keyCode: 39});
+      engn.keys.upEvt({keyCode: 39});
     };
     document.querySelector("#mobileft").ontouchstart = function () {
-      engn.keys.down({keyCode: 37});
+      engn.keys.downEvt({keyCode: 37});
     };
     document.querySelector("#mobileft").ontouchend = function () {
-      engn.keys.up({keyCode: 37});
+      engn.keys.upEvt({keyCode: 37});
     };
     document.querySelector("#mobidown").ontouchstart = function () {
-      engn.keys.down({keyCode: 40});
+      engn.keys.downEvt({keyCode: 40});
     };
     document.querySelector("#mobidown").ontouchend = function () {
-      engn.keys.up({keyCode: 40});
+      engn.keys.upEvt({keyCode: 40});
     };
     document.querySelector("#mobiup").ontouchstart = function () {
-      engn.keys.down({keyCode: 38});
+      engn.keys.downEvt({keyCode: 38});
     };
     document.querySelector("#mobiup").ontouchend = function () {
-      engn.keys.up({keyCode: 38});
+      engn.keys.upEvt({keyCode: 38});
     };
     var hideMessage = function () {
       msgelem.style.display = "none";
@@ -165,10 +165,10 @@
     loop.onUpdate(function(){
       // Add key-based player movement.
       var speedx = 0, speedy = 0;
-      if (engn.keys.keyDown('39')) speedx = player.speed;
-      if (engn.keys.keyDown('37')) speedx = -player.speed;
-      if (engn.keys.keyDown('40')) speedy = player.speed;
-      if (engn.keys.keyDown('38')) speedy = -player.speed;
+      if (engn.keys.right) speedx = player.speed;
+      if (engn.keys.left) speedx = -player.speed;
+      if (engn.keys.down) speedy = player.speed;
+      if (engn.keys.up) speedy = -player.speed;
       player.x += speedx;
       player.y += speedy;
 

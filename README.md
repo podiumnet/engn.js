@@ -36,11 +36,110 @@ Check for the intersection of rectangle `a` and rectangle `b`.
 
 **Returns:** A boolean value representing whether or not the rectangles intersect.
 
-## engn.keys ()
+## engn.keys
 A key monitor to determine which keys are pressed.
 
-### keyDown (keycode)
-Check whether the key `keycode` is down.
+### [keyname]
+`engn.keys[keyname]` represents whether the key with that key name is pressed.
+The following keys are included:
+* backspace
+* tab
+* enter
+* shift
+* ctrl
+* alt
+* pausebreak
+* caps
+* escape
+* pgup
+* pgdown
+* end
+* home
+* left
+* up
+* right
+* down
+* insert
+* delete
+* 0
+* 1
+* 2
+* 3
+* 4
+* 5
+* 6
+* 7
+* 8
+* 9
+* a
+* b
+* c
+* d
+* e
+* f
+* g
+* h
+* i
+* j
+* k
+* l
+* m
+* n
+* o
+* p
+* q
+* r
+* s
+* t
+* u
+* v
+* w
+* x
+* y
+* z
+* winleft
+* winright
+* select
+* num0
+* num1
+* num2
+* num3
+* num4
+* num5
+* num6
+* num7
+* num8
+* num9
+* multiply
+* add
+* subtract
+* decimal
+* divide
+* f1
+* f2
+* f3
+* f4
+* f5
+* f6
+* f7
+* f8
+* f9
+* f10
+* f11
+* f12
+* numlock
+* scrolllock
+* semicolon
+* equals
+* comma
+* dash
+* period
+* slash
+* grave accent
+* openbracket
+* backslash
+* closebraket
+* singlequote
 
 ### reset ()
 Reset the statuses of all keys.
@@ -48,11 +147,11 @@ Reset the statuses of all keys.
 ### noPreventDefault ()
 Stop the key monitor from using preventDefault.
 
-### down (e)
+### downEvt (e)
 Trigger a simulated onkeydown event. `e` is an object with a `keyCode` property
 representing the key to be pressed.
 
-### up (e)
+### upEvt (e)
 Trigger a simulated onkeyup event. `e` is an object with a `keyCode` property
 representing the key to be released.
 

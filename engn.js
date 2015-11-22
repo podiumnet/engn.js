@@ -218,7 +218,7 @@
     loop = function () {
       // Run the update bindings if the time set in next has come, and it will not permit any more
       // skipped renders.
-      while (new Date().getTime() > next && skipped < skipUntil) {
+      while (new Date().getTime() > next && skipped < skipUntil && !frozen) {
         update();
         next += interval;
         skipped++;

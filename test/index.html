@@ -55,11 +55,11 @@
       if (e.keyCode === 13) hideMessage();
     };
     var levelSwitch = function (text, newlevel) {
-      difficulty = newlevel;
+      loop.freeze();
       msgelem.style.display = "block";
       document.querySelector("#messagetext").innerHTML = text;
+      difficulty = newlevel;
       msgbtn.focus();
-      loop.freeze();
       engn.keys.reset();
     };
     var setGame = function () {
@@ -79,7 +79,8 @@
           width: Math.floor(15 + Math.random() * 40),
           height: Math.floor(15 + Math.random() * 40),
           color: 'rgb(' + Math.floor(20 + Math.random() * 230) + ',' + Math.floor(5 + Math.random() * 100) + ',' + Math.floor(5 + Math.random() * 150) + ')',
-          speed: difficulty / 2 + 1 + Math.floor(Math.random() * 3)
+          speed: difficulty / 2 + 1 + Math.floor(Math.random() * 3),
+          move: Math.floor(Math.random() * 4)
         });
       }
       goal = {
@@ -117,7 +118,7 @@
       enemies.forEach(function(enemy){
         // Update the intersection found status.
         isect = engn.checkIntersection(player, enemy) || isect;
-        if(player.x > 10 || player.y > 10) {
+        if(enemy.move && (player.x > 10 || player.y > 10)) {
           enemy.x += player.x > enemy.x ? enemy.speed : -enemy.speed;
           enemy.y += player.y > enemy.y ? enemy.speed : -enemy.speed;
         }

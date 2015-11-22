@@ -36,6 +36,25 @@ Check for the intersection of rectangle `a` and rectangle `b`.
 
 **Returns:** A boolean value representing whether or not the rectangles intersect.
 
+## engn.makeDPad (container = document.body)
+Create a game DPad and insert it into the given `container`.
+This is for use on touchscreen devices and the function will do nothing on
+non-touchscreens. The four arrows of the DPad are mapped to the keyboard arrow
+keys through `engn.keys`.
+
+### Default Styling/Appearance
+The D-Pad looks like this:
+
+![ddd](http://s24.postimg.org/hc4a5wh3p/Dpad_screenshot.png)
+
+It is positioned at the bottom center of the screen, overlaying other content.
+It is semi-transparent so that the content below it is visible.
+
+### Classes
+* **edpad** - The D-Pad container.
+* **edpadup**, **edpaddown**, **edpadleft**, **edpadright** - The up, down, left, and right buttons.
+* **edpadrow** - A container for the **edpadleft** and **edpadright** elements.
+
 ## engn.keys
 A key monitor to determine which keys are pressed.
 

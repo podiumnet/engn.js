@@ -6,6 +6,56 @@
   // Create the EngnJS object if it doesn't exist.
   window.engn = engn = window.engn || {};
 
+  engn.makeDPad = function (container) {
+    if (!document.createTouch) return; // Exit if this is not a touchscreen.
+
+    // A function to bind touch events to keys.
+    var keyBind = function (elem, keyid) {
+      elem.ontouchstart = function () {
+        engn.keys.downEvt({keyCode: keyid, preventDefault: function(){}});
+      };
+      elem.ontouchend = function () {
+        engn.keys.upEvt({keyCode: keyid, preventDefault: function(){}});
+      };
+    };
+
+    // The DPad goes into this.
+    var into = container || document.body;
+
+    // Create the DPad DOM.
+    var primary = document.createElement("div");
+    primary.className = "edpad";
+    var up = document.createElement("div");
+    up.className = "edpadup";
+    var row = document.createElement("div");
+    row.className = "edpadrow";
+    var left = document.createElement("div");
+    left.className = "edpadleft";
+    var right = document.createElement("div");
+    right.className = "edpadright";
+    var down = document.createElement("div");
+    down.className = "edpaddown";
+
+    // Bind the touch events to certain keys.
+    keyBind(up, 38);
+    keyBind(left, 37);
+    keyBind(right, 39);
+    keyBind(down, 40);
+
+    // Append the DPad to the given container.
+    row.appendChild(left);
+    row.appendChild(right);
+    primary.appendChild(up);
+    primary.appendChild(row);
+    primary.appendChild(down);
+    into.appendChild(primary);
+
+    // Insert the basic CSS styling for the DPad.
+    var styling = document.createElement("style");
+    styling.innerHTML = ".edpad {width: 250px;height: 250px;position: fixed;bottom: 10px;left: calc(50vw - 100px);background: rgba(0,0,0,0.3);padding: 5px;border-radius: 3px;} .edpadup, .edpaddown, .edpadleft, .edpadright {width: 33%;height: 33%;background: rgba(0,0,0,0.4);border-radius: 3px;}.edpadup, .edpaddown {margin: 0 auto;} .edpadleft {float: left;} .edpadright {float: right;} .edpadrow {width: 100%;height: 33%;} .edpadrow * {height: 100%;}"
+    document.head.appendChild(styling);
+  };
+
   // Checks for intersection. Adapted from
   // http://stackoverflow.com/questions/2752349/fast-rectangle-to-rectangle-intersection.
   engn.checkIntersection = function (a, b) {

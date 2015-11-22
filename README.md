@@ -7,6 +7,11 @@ It is licensed under the MIT license.
 
 Everything is located in the `engn` namespace.
 
+## engn.trap (thing, container)
+Trap the object `thing` inside of `container`.
+This moves `thing` to remain inside the bounds of `container`.
+Both `thing` and `container` are objects with `x`, `y`, `width`, and `height` properties.
+
 ## engn.Loop (fps)
 Establish a Loop object with the specified FPS for the loop. This is used for game loops.
 

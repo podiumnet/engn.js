@@ -6,6 +6,14 @@
   // Create the EngnJS object if it doesn't exist.
   window.engn = engn = window.engn || {};
 
+  engn.trap = function (thing, container) {
+    // Contain the thing in the container.
+    if (thing.x < container.x) thing.x = container.x;
+    if (thing.x > container.x + container.width - thing.width) thing.x = container.x + container.width - thing.width;
+    if (thing.y < container.y) thing.y = container.y;
+    if (thing.y > container.y + container.height - thing.height) thing.y = container.x + container.height - thing.height;
+  };
+
   engn.makeDPad = function (container) {
     if (!document.createTouch) return; // Exit if this is not a touchscreen.
 

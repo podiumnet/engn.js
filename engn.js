@@ -181,8 +181,6 @@
       me[keys[e.keyCode]] = 0;
       if (prevdef && (e.keyCode < 112 || e.keyCode > 123)) e.preventDefault();
     };
-    window.addEventListener("keydown", this.downEvt);
-    window.addEventListener("keyup", this.upEvt);
     this.reset = function () {
       keys.forEach(function(keyname){
         this[keyname] = 0;
@@ -191,6 +189,9 @@
     this.noPreventDefault = function () {
       prevdef = false;
     }
+    window.addEventListener("keydown", this.downEvt);
+    window.addEventListener("keyup", this.upEvt);
+    window.addEventListener("blur", this.reset);
   });
 
   // Create the Loop class.

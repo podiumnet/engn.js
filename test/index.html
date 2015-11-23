@@ -40,7 +40,7 @@
     canvas.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     canvas.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     var ctx = canvas.getContext("2d");
-    var player, enemies, goal, difficulty = 1;
+    var player, enemies, goal, held = 0, difficulty = 1, ticks = 0;
     var msgelem = document.querySelector("#message");
     var msgbtn = document.querySelector("#msgbtn");
     var screen = { x: 0, y: 0, width: canvas.width, height: canvas.height};
@@ -63,13 +63,15 @@
       engn.keys.reset();
     };
     var setGame = function () {
+      held = 0
       player = {
         x: 0,
         y: 0,
         width: 20,
         height: 20,
         color: "#0f0",
-        speed: 5
+        speed: 5.5,
+        direction: 0
       };
       enemies = [];
       for (var i = 0; i < (canvas.width * canvas.height / 300000) + difficulty; i++) {
@@ -78,9 +80,11 @@
           y: Math.floor(100 + Math.random() * (canvas.height - 80)),
           width: Math.floor(15 + Math.random() * 40),
           height: Math.floor(15 + Math.random() * 40),
-          color: 'rgb(' + Math.floor(20 + Math.random() * 230) + ',' + Math.floor(5 + Math.random() * 100) + ',' + Math.floor(5 + Math.random() * 150) + ')',
-          speed: difficulty / 2 + 1 + Math.floor(Math.random() * 3),
-          move: Math.floor(Math.random() * 4)
+          color: 'rgba(' + Math.floor(20 + Math.random() * 230) + ',' + Math.floor(5 + Math.random() * 100) + ',' + Math.floor(5 + Math.random() * 150) + ', 0.8)',
+          speed: difficulty / 3 + 1.5 + Math.floor(Math.random() * 3),
+          move: Math.floor(Math.random() * 5),
+          dirx: false,
+          diry: true
         });
       }
       goal = {
@@ -98,14 +102,29 @@
     var loop = new engn.Loop(60);
     setGame();
     loop.onUpdate(function(){
+      ticks++;
       // Add key-based player movement.
-      var speedx = 0, speedy = 0;
-      if (engn.keys.right) speedx = player.speed;
-      if (engn.keys.left) speedx = -player.speed;
-      if (engn.keys.down) speedy = player.speed;
-      if (engn.keys.up) speedy = -player.speed;
-      player.x += speedx;
-      player.y += speedy;
+      if (engn.keys.right || engn.keys.left || engn.keys.up || engn.keys.down)
+        held++;
+      else held = 0;
+      var spurt = held > 200 ? 1 : 0;
+      if (engn.keys.right) player.direction = 1;
+      if (engn.keys.left) player.direction = 2;
+      if (engn.keys.down) player.direction = 3;
+      if (engn.keys.up) player.direction = 4;
+      switch(player.direction) {
+        case 1:
+          player.x += player.speed + spurt;
+          break;
+        case 2:
+          player.x -= player.speed - spurt;
+          break;
+        case 3:
+          player.y += player.speed + spurt;
+          break;
+        case 4:
+          player.y -= player.speed - spurt;
+      }
       // Keep the player on the screen.
       engn.trap(player, screen);
 
@@ -119,8 +138,23 @@
         // Update the intersection found status.
         isect = engn.checkIntersection(player, enemy) || isect;
         if(enemy.move && (player.x > 10 || player.y > 10)) {
-          enemy.x += player.x > enemy.x ? enemy.speed : -enemy.speed;
-          enemy.y += player.y > enemy.y ? enemy.speed : -enemy.speed;
+          if (enemy.move === 1) {
+            if (ticks % 30 === 0) {
+              enemy.dirx = Math.random() > 0.5
+              enemy.diry = Math.random() > 0.5
+            }
+            enemy.x += enemy.dirx ? enemy.speed : -enemy.speed;
+            enemy.y += enemy.diry ? enemy.speed : -enemy.speed;
+          } else if (enemy.move === 2) {
+            if (!enemy.target || engn.checkIntersection(enemy, enemy.target)) {
+              enemy.target = enemies[Math.floor(Math.random() * enemies.length)];
+            }
+            enemy.x += enemy.target.x > enemy.x ? enemy.speed : -enemy.speed;
+            enemy.y += enemy.target.y > enemy.y ? enemy.speed : -enemy.speed;
+          } else {
+            enemy.x += player.x > enemy.x ? enemy.speed : -enemy.speed;
+            enemy.y += player.y > enemy.y ? enemy.speed : -enemy.speed;
+          }
         }
         // Keep the player on the screen.
         engn.trap(enemy, screen);

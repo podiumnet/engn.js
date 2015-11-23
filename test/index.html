@@ -11,59 +11,25 @@
     body {
       margin: 0;
     }
-    #message {
-      width: 100%;
-      height: 100%;
-      position: fixed;
-      top: 0;
-      left: 0;
-      display: none;
-      background: #000;
-      color: #fff;
-      text-align: center;
-      font-family: sans-serif;
-      z-index: 2;
-    }
-    button {
-      padding: .5em;
-      border: 0;
-      background: #fff;
-      color: #000;
-    }
     </style>
   </head>
   <body>
     <canvas id="gamevas"></canvas>
-    <div id="message"><h1 id="messagetext"></h1><button id="msgbtn">OKAY</button></div>
     <script>
     var canvas = document.querySelector("#gamevas");
     canvas.width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
     canvas.height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
     var ctx = canvas.getContext("2d");
     var player, enemies, goal, held = 0, difficulty = 1, ticks = 0;
-    var msgelem = document.querySelector("#message");
-    var msgbtn = document.querySelector("#msgbtn");
     var screen = { x: 0, y: 0, width: canvas.width, height: canvas.height};
     engn.makeDPad();
-    var hideMessage = function () {
-      msgelem.style.display = "none";
-      setGame();
-      loop.unfreeze();
-    };
-    msgbtn.onclick = hideMessage;
-    msgbtn.onkeydown = function (e) {
-      if (e.keyCode === 13) hideMessage();
-    };
     var levelSwitch = function (text, newlevel) {
-      loop.freeze();
-      msgelem.style.display = "block";
-      document.querySelector("#messagetext").innerHTML = text;
       difficulty = newlevel;
-      msgbtn.focus();
       engn.keys.reset();
+      setGame();
     };
     var setGame = function () {
-      held = 0
+      held = 0;
       player = {
         x: 0,
         y: 0,

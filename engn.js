@@ -60,7 +60,7 @@
 
     // Insert the basic CSS styling for the DPad.
     var styling = document.createElement("style");
-    styling.innerHTML = ".edpad {width: 250px;height: 250px;position: fixed;bottom: 10px;left: calc(50vw - 100px);background: rgba(0,0,0,0.3);padding: 5px;border-radius: 3px;} .edpadup, .edpaddown, .edpadleft, .edpadright {width: 33%;height: 33%;background: rgba(0,0,0,0.4);border-radius: 3px;}.edpadup, .edpaddown {margin: 0 auto;} .edpadleft {float: left;} .edpadright {float: right;} .edpadrow {width: 100%;height: 33%;} .edpadrow * {height: 100%;}"
+    styling.innerHTML = ".edpad {width: 250px;height: 250px;position: fixed;bottom: 10px;left: calc(50vw - 100px);background: rgba(0,0,0,0.3);padding: 5px;border-radius: 3px;} .edpadup, .edpaddown, .edpadleft, .edpadright {width: 33%;height: 33%;background: rgba(0,0,0,0.4);border-radius: 3px;}.edpadup, .edpaddown {margin: 0 auto;} .edpadleft {float: left;} .edpadright {float: right;} .edpadrow {width: 100%;height: 33%;} .edpadrow * {height: 100%;}";
     document.head.appendChild(styling);
   };
 
@@ -188,11 +188,13 @@
     };
     this.noPreventDefault = function () {
       prevdef = false;
-    }
-    window.addEventListener("keydown", this.downEvt);
-    window.addEventListener("keyup", this.upEvt);
-    window.addEventListener("focus", this.reset);
-  });
+    };
+    this.bind = function (subject) {
+      subject.addEventListener("keydown", this.downEvt);
+      subject.addEventListener("keyup", this.upEvt);
+      subject.addEventListener("focus", this.reset);
+    };
+  })();
 
   // Create the Loop class.
   engn.Loop = function (fps) {

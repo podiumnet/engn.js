@@ -180,3 +180,6 @@ Trigger a simulated onkeyup event. `e` is an object with a `keyCode` property
 representing the key to be released.
 
 **Returns:** A boolean value representing whether or not the key is pressed.
+
+### bind (subject)
+Detect keypresses for `subject`.

@@ -176,7 +176,7 @@
     var ignores = [];
     var notIgnored = function (target) {
       if (!target) return true;
-      ignores.each(function(ignored) {
+      ignores.forEach(function(ignored) {
         if (target.matches(ignored)) return false;
       });
       return true;

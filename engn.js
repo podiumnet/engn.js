@@ -173,13 +173,25 @@
     keys[222] = "singlequote";
     var me = this;
     var prevdef = true;
+    var ignores = [];
+    var notIgnored = function (target) {
+      if (!target) return true;
+      ignores.each(function(ignored) {
+        if (target.matches(ignored)) return false;
+      });
+      return true;
+    };
     this.downEvt = function (e) {
-      me[keys[e.keyCode]] = 1;
-      if (prevdef && (e.keyCode < 112 || e.keyCode > 123)) e.preventDefault();
+      if (notIgnored(e.target)) {
+        me[keys[e.keyCode]] = 1;
+        if (prevdef && (e.keyCode < 112 || e.keyCode > 123)) e.preventDefault();
+      }
     };
     this.upEvt = function (e) {
-      me[keys[e.keyCode]] = 0;
-      if (prevdef && (e.keyCode < 112 || e.keyCode > 123)) e.preventDefault();
+      if (notIgnored(e.target)) {
+        me[keys[e.keyCode]] = 0;
+        if (prevdef && (e.keyCode < 112 || e.keyCode > 123)) e.preventDefault();
+      }
     };
     this.reset = function () {
       keys.forEach(function(keyname){
@@ -193,6 +205,9 @@
       subject.addEventListener("keydown", this.downEvt);
       subject.addEventListener("keyup", this.upEvt);
       subject.addEventListener("focus", this.reset);
+    };
+    this.ignore = function (selector) {
+      ignores.push(selector);
     };
   })();
 

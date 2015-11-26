@@ -183,3 +183,6 @@ representing the key to be released.
 
 ### bind (subject)
 Detect keypresses for `subject`.
+
+### ignore (selector)
+Ignore keypresses focused on this child element selector.

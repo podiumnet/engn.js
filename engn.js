@@ -1,4 +1,4 @@
-// engn.js (v2.3.0) - A simple game utilities library.
+// engn.js (v2.3.1) - A simple game utilities library.
 // Licensed under the MIT license.
 // Copyright (C) 2015 Podium
 // GitHub Repository: podiumnet/engn.js
@@ -176,10 +176,11 @@
     var ignores = [];
     var notIgnored = function (target) {
       if (!target) return true;
+      var status = true;
       ignores.forEach(function(ignored) {
-        if (target.matches(ignored)) return false;
+        if (target.matches(ignored)) status = false;
       });
-      return true;
+      return status;
     };
     this.downEvt = function (e) {
       if (notIgnored(e.target)) {
